@@ -26,7 +26,7 @@ public static class AccessGate
 {
     public const string ServerGuildId  = "YOUR_GUILD_ID";
     public const string RequiredRoleId = "YOUR_ROLE_ID";
-    public const string InviteUrl      = "https://discord.gg/YOUR_INVITE";
+    public const string InviteUrl      = "https://discord.gg/Ftfapzsr5m";
     public const string RoleServiceUrl = "https://YOUR_APP.up.railway.app";
 
     public enum Status
