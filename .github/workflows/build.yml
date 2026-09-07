@@ -22,43 +22,36 @@ jobs:
           dotnet-version: '8.0.x'
 
       # ── Dusk Launcher (the injector GUI) ───────────────────────────
+      # Directory build — all DLLs on disk, no single-file extraction.
+      # This avoids the Windows side-by-side error on machines that
+      # lack the VC++ Redistributable.
       - name: Publish Dusk Launcher
         run: |
           dotnet publish DuskLauncher/src/Dusk.Launcher -c Release -r win-x64 `
-            --self-contained true -p:PublishSingleFile=true `
-            -p:IncludeNativeLibrariesForSelfExtract=true -o artifacts/launcher
+            --self-contained true -p:PublishSingleFile=false `
+            -o artifacts/launcher
 
-      # ── Dusk Installer ─────────────────────────────────────────────
-      - name: Publish Dusk Installer
-        run: |
-          dotnet publish DuskLauncher/src/Dusk.Installer -c Release -r win-x64 `
-            --self-contained true -p:PublishSingleFile=true `
-            -p:IncludeNativeLibrariesForSelfExtract=true -o artifacts/installer
-
-      # Zip the launcher next to the installer so the installer can
-      # bundle it offline instead of downloading from a release.
-      - name: Bundle launcher for installer
+      # Zip the launcher directory for download.
+      - name: Zip Dusk Launcher
         shell: pwsh
-        run: Compress-Archive -Path artifacts/launcher/* -DestinationPath artifacts/installer/DuskLauncher.zip -Force
+        run: Compress-Archive -Path artifacts/launcher/* -DestinationPath artifacts/DuskLauncher.zip -Force
 
       # Optional: if a SentinelMenu.dll exists in drop/, carry it along.
       - name: Bundle menu DLL (if present)
         shell: pwsh
         run: |
-          if (Test-Path drop/SentinelMenu.dll) { Copy-Item drop/SentinelMenu.dll artifacts/installer/ }
+          if (Test-Path drop/SentinelMenu.dll) { Copy-Item drop/SentinelMenu.dll artifacts/ }
 
       - uses: actions/upload-artifact@v4
         with:
           name: DuskLauncher-windows-x64
           path: artifacts/
 
-      # Tagged builds publish a release with the two exes.
+      # Tagged builds publish a release with the launcher zip.
       - name: GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/installer/DuskInstaller.exe
-            artifacts/launcher/DuskLauncher.exe
-            artifacts/installer/DuskLauncher.zip
-            artifacts/installer/SentinelMenu.dll
+            artifacts/DuskLauncher.zip
+            artifacts/SentinelMenu.dll
