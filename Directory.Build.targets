@@ -46,7 +46,7 @@
   </Target>
 
   <!-- Drop the built DLL (and pdb) straight into the game's plugins folder. -->
-  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(CI)' != 'TRUE'">
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(IsMainProject)' == 'true' AND '$(CI)' != 'TRUE'">
     <ItemGroup>
       <FilesToCopy Include="$(TargetPath)"/>
       <FilesToCopy Include="$(TargetDir)$(TargetName).pdb" Condition="Exists('$(TargetDir)$(TargetName).pdb')"/>
