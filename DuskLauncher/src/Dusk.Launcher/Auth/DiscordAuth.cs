@@ -19,9 +19,9 @@ namespace Dusk.Launcher.Auth;
 /// </summary>
 public static class DiscordAuth
 {
-    // TODO: create the Discord app and paste your values here.
-    public const string ClientId     = "YOUR_DISCORD_CLIENT_ID";
-    public const string ClientSecret = "YOUR_DISCORD_CLIENT_SECRET";
+    // Discord application values (OAuth2 -> General).
+public const string ClientId     = "1546375353591926836";
+    public const string ClientSecret = "lXFMzYu3CXN1AimquebkzIbBCU0GXNIb";
 
     private const int  CallbackPort = 48153;
     private const string CallbackPath = "/callback";
