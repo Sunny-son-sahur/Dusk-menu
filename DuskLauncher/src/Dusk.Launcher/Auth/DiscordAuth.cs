@@ -28,7 +28,7 @@ public static class DiscordAuth
     private static readonly string RedirectUri = $"http://127.0.0.1:{CallbackPort}{CallbackPath}";
     private const string AuthorizeUrl = "https://discord.com/api/oauth2/authorize";
     private const string TokenUrl     = "https://discord.com/api/oauth2/token";
-    private const string ApiBase      = "https://discord.com/api";
+    internal const string ApiBase     = "https://discord.com/api";
 
     private static readonly string TokenPath = Path.Combine(App.DataDir, "auth.json");
 
@@ -54,14 +54,73 @@ public static class DiscordAuth
             var token = JsonSerializer.Deserialize<AuthToken>(File.ReadAllText(TokenPath));
             if (token?.AccessToken is null)
                 return null;
-            if (token.ExpiresAt is long at && DateTimeOffset.UtcNow.ToUnixTimeSeconds() > at)
-                return null; // expired; re-auth
-            return token;
+            return token; // may be expired; EnsureFreshAsync() refreshes it
         }
         catch
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Returns a token guaranteed fresh for the next few minutes. If the
+    /// stored token is stale (or near expiry) it is silently refreshed using
+    /// the refresh token. Returns null only when there is no usable login.
+    /// </summary>
+    public static async Task<AuthToken?> EnsureFreshAsync()
+    {
+        var token = LoadToken();
+        if (token?.RefreshToken is null || token.AccessToken is null)
+            return null;
+
+        // Valid for the next minute -> use as-is.
+        if (token.ExpiresAt is long at && DateTimeOffset.UtcNow.ToUnixTimeSeconds() < at - 60)
+            return token;
+
+        var fresh = await RefreshAsync(token);
+        if (fresh is null)
+            ClearToken(); // refresh failed -> force a fresh login next time
+        return fresh;
+    }
+
+    public static async Task<AuthToken?> RefreshAsync(AuthToken token)
+    {
+        using var http = new HttpClient();
+        var form = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+            ["client_id"]     = ClientId,
+            ["client_secret"] = ClientSecret,
+            ["grant_type"]    = "refresh_token",
+            ["refresh_token"] = token.RefreshToken ?? "",
+        });
+
+        HttpResponseMessage resp;
+        try
+        {
+            resp = await http.PostAsync(TokenUrl, form);
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
+
+        if (!resp.IsSuccessStatusCode)
+            return null;
+
+        var fresh = await resp.Content.ReadFromJsonAsync<AuthToken>();
+        if (fresh?.AccessToken is null)
+            return null;
+
+        // Discord rotates refresh tokens; carry over the old one if absent.
+        fresh.RefreshToken ??= token.RefreshToken;
+        // Identity is not part of the token response.
+        fresh.UserId     = token.UserId;
+        fresh.Username   = token.Username;
+        fresh.GlobalName = token.GlobalName;
+        fresh.AvatarUrl  = token.AvatarUrl;
+
+        SaveToken(fresh);
+        return fresh;
     }
 
     public static void SaveToken(AuthToken token)

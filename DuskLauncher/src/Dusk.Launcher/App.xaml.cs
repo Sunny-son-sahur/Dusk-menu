@@ -11,7 +11,7 @@ public partial class App : Application
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "Dusk Launcher");
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         Directory.CreateDirectory(DataDir);
 
@@ -23,6 +23,22 @@ public partial class App : Application
             {
                 Shutdown(0);
                 return;
+            }
+        }
+        else
+        {
+            // Existing login: silently refresh a stale token in the
+            // background. If the refresh fails (revoked/expired) the token
+            // is cleared and the user is asked to log in again.
+            var fresh = await Auth.DiscordAuth.EnsureFreshAsync();
+            if (fresh is null)
+            {
+                var gate = new Auth.AuthWindow();
+                if (!gate.ShowDialog()!.Value)
+                {
+                    Shutdown(0);
+                    return;
+                }
             }
         }
 

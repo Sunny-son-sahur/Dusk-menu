@@ -58,5 +58,29 @@
             <views:FriendsView x:Name="FriendsView" Visibility="Collapsed" x:FieldModifier="internal" />
             <views:ConnectionsView x:Name="ConnectionsView" Visibility="Collapsed" x:FieldModifier="internal" />
         </Grid>
+
+        <!-- ── Access gate overlay ────────────────────────────────── -->
+        <Border x:Name="GatePanel" Grid.ColumnSpan="2" Visibility="Collapsed"
+                Background="#E614141C">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                        MaxWidth="520" Margin="32">
+                <TextBlock x:Name="GateIcon" FontSize="40" TextAlignment="Center"
+                           Foreground="{StaticResource AccentBrush}" Text="🔒" />
+                <TextBlock x:Name="GateTitle" FontSize="22" FontWeight="Bold"
+                           TextAlignment="Center" Margin="0,12,0,0"
+                           Foreground="{StaticResource TextBrush}" />
+                <TextBlock x:Name="GateMessage" FontSize="13.5" TextWrapping="Wrap"
+                           TextAlignment="Center" Margin="0,12,0,24" LineHeight="20"
+                           Foreground="{StaticResource TextDimBrush}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="GateActionButton" Style="{StaticResource PrimaryButton}"
+                            Padding="22,12" Visibility="Collapsed" Click="OnGateAction" />
+                    <Button x:Name="GateRetryButton" Content="Check again" Padding="18,12"
+                            Margin="12,0,0,0" Visibility="Collapsed" Click="OnGateRetry" />
+                </StackPanel>
+                <TextBlock x:Name="GateStatusText" FontSize="12" TextAlignment="Center"
+                           Margin="0,18,0,0" Foreground="{StaticResource TextDimBrush}" />
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
