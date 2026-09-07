@@ -1,0 +1,57 @@
+<UserControl x:Class="Dusk.Launcher.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="SETTINGS" Style="{StaticResource SectionHeader}" />
+
+        <!-- Menu DLL -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,24">
+            <TextBlock Text="Menu DLL" Foreground="{StaticResource TextDimBrush}" />
+            <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="MenuDllBox" Grid.Column="0" VerticalContentAlignment="Center"
+                         TextChanged="OnDllChanged" />
+                <Button Grid.Column="1" Content="Browse..." Margin="8,0,0,0" Click="OnBrowseDll" />
+            </Grid>
+        </StackPanel>
+
+        <!-- Appearance -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,24">
+            <TextBlock Text="Appearance" Foreground="{StaticResource TextDimBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <TextBlock Text="Accent:" VerticalAlignment="Center"
+                           Foreground="{StaticResource TextDimBrush}" />
+                <Button Content="Blue" Margin="8,0,0,0" Tag="#FF00AAFF" Click="OnAccent" />
+                <Button Content="Red" Margin="8,0,0,0" Tag="#FFFF4455" Click="OnAccent" />
+                <Button Content="Green" Margin="8,0,0,0" Tag="#FF22DD88" Click="OnAccent" />
+                <Button Content="Purple" Margin="8,0,0,0" Tag="#FFAA66FF" Click="OnAccent" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Behavior -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,24">
+            <TextBlock Text="Behavior" Foreground="{StaticResource TextDimBrush}" />
+            <CheckBox x:Name="AutoDetectCheck" Content="Auto-detect the game path on launch"
+                      Foreground="{StaticResource TextBrush}" Margin="0,8,0,0"
+                      Checked="OnBehaviorChanged" Unchecked="OnBehaviorChanged" />
+            <CheckBox x:Name="LaunchOnStartCheck" Content="Launch Gorilla Tag automatically when Dusk starts"
+                      Foreground="{StaticResource TextBrush}" Margin="0,6,0,0"
+                      Checked="OnBehaviorChanged" Unchecked="OnBehaviorChanged" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="4" Text="Dusk Launcher v1.0.0 · SentinelMenu backend"
+                   Foreground="{StaticResource TextDimBrush}" FontSize="11"
+                   VerticalAlignment="Bottom" />
+    </Grid>
+</UserControl>

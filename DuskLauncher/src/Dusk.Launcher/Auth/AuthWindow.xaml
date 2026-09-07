@@ -1,0 +1,47 @@
+<Window x:Class="Dusk.Launcher.Auth.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dusk Launcher — Verify"
+        Width="420" Height="300"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Border Background="{StaticResource BgBrush}" CornerRadius="10">
+        <Grid Margin="28">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="DUSK LAUNCHER" FontSize="22" FontWeight="Bold"
+                       Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center" />
+
+            <TextBlock Grid.Row="1" Margin="0,8,0,0" TextWrapping="Wrap" TextAlignment="Center"
+                       Foreground="{StaticResource TextDimBrush}" FontSize="13">
+                To use Dusk Launcher you need to verify your Discord account.
+                You will be asked to authorize a bot in your browser.
+            </TextBlock>
+
+            <StackPanel Grid.Row="2" VerticalAlignment="Center">
+                <Button x:Name="AuthorizeButton" Style="{StaticResource PrimaryButton}"
+                        Content="Authorize with Discord" Height="42" Click="OnAuthorize" />
+                <TextBlock x:Name="StatusText" Margin="0,12,0,0" TextAlignment="Center"
+                           Foreground="{StaticResource TextDimBrush}" FontSize="12" />
+            </StackPanel>
+
+            <Button Grid.Row="3" Content="Cancel" IsCancel="True" Height="34"
+                    Click="OnCancel" Margin="0,8,0,0" />
+
+            <TextBlock Grid.Row="4" Margin="0,12,0,0" TextAlignment="Center"
+                       Foreground="{StaticResource TextDimBrush}" FontSize="11">
+                This only proves you own the Discord account. No messages are read.
+            </TextBlock>
+        </Grid>
+    </Border>
+</Window>

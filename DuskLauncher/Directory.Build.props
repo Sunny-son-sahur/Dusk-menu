@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+  <!-- Isolate the Dusk suite from the BepInEx plugin's build targets at the
+       repo root (GamePath copying, plugins drop). CI=TRUE disables those
+       targets for every project under this folder. -->
+  <PropertyGroup>
+    <CI>TRUE</CI>
+  </PropertyGroup>
+</Project>

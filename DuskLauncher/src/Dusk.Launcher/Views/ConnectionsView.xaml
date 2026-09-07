@@ -1,0 +1,67 @@
+<UserControl x:Class="Dusk.Launcher.Views.ConnectionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="CONNECTIONS" Style="{StaticResource SectionHeader}" />
+
+        <!-- Status cards -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{StaticResource PanelBrush}" CornerRadius="6"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="14,12"
+                    Margin="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="DISCORD" Foreground="{StaticResource TextDimBrush}" FontSize="11" />
+                    <TextBlock x:Name="DiscordStatus" Text="—" FontSize="14" FontWeight="Bold"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Background="{StaticResource PanelBrush}" CornerRadius="6"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="14,12"
+                    Margin="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="GAME" Foreground="{StaticResource TextDimBrush}" FontSize="11" />
+                    <TextBlock x:Name="GameStatus" Text="—" FontSize="14" FontWeight="Bold"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Background="{StaticResource PanelBrush}" CornerRadius="6"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="14,12">
+                <StackPanel>
+                    <TextBlock Text="MENU" Foreground="{StaticResource TextDimBrush}" FontSize="11" />
+                    <TextBlock x:Name="MenuStatus" Text="—" FontSize="14" FontWeight="Bold"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Log -->
+        <Border Grid.Row="2" Background="{StaticResource PanelBrush}" CornerRadius="6"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="ACTIVITY LOG" Foreground="{StaticResource TextDimBrush}"
+                           FontSize="11" Margin="0,0,0,8" />
+                <ListBox x:Name="LogList" Grid.Row="1" Background="Transparent" BorderThickness="0"
+                         Foreground="{StaticResource TextDimBrush}"
+                         FontFamily="Consolas" FontSize="11.5" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

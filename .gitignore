@@ -1,0 +1,20 @@
+# Build output
+bin/
+obj/
+*.user
+
+# References are populated from the game install at build time
+References/Managed/
+References/core/
+
+# Plugin runtime dirs
+SentinelMenu/
+Plugins/
+
+# Optional CI drop folder
+drop/
+
+# IDE
+.vs/
+.idea/
+*.suo

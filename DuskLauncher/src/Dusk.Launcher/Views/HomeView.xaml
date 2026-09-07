@@ -1,0 +1,69 @@
+<UserControl x:Class="Dusk.Launcher.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="HOME" Style="{StaticResource SectionHeader}" />
+
+        <!-- Platform choice -->
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Where is your Gorilla Tag?" Foreground="{StaticResource TextDimBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <RadioButton x:Name="PlatformSteam" Content="Steam" GroupName="platform"
+                             Foreground="{StaticResource TextBrush}" Checked="OnPlatformChanged" />
+                <RadioButton x:Name="PlatformMeta" Content="Meta (Oculus)" GroupName="platform"
+                             Foreground="{StaticResource TextBrush}" Margin="20,0,0,0"
+                             Checked="OnPlatformChanged" />
+                <RadioButton x:Name="PlatformCustom" Content="Custom" GroupName="platform"
+                             Foreground="{StaticResource TextBrush}" Margin="20,0,0,0"
+                             Checked="OnPlatformChanged" />
+            </StackPanel>
+
+            <!-- Path row -->
+            <Grid Margin="0,18,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="PathBox" Grid.Column="0" TextChanged="OnPathChanged"
+                         VerticalContentAlignment="Center" />
+                <Button Grid.Column="1" Content="Auto Detect" Margin="8,0,0,0"
+                        Click="OnAutoDetect" />
+                <Button Grid.Column="2" Content="Browse..." Margin="8,0,0,0"
+                        Click="OnBrowse" />
+            </Grid>
+
+            <TextBlock x:Name="DetectStatus" Margin="0,8,0,0"
+                       Foreground="{StaticResource TextDimBrush}" FontSize="12" />
+        </StackPanel>
+
+        <!-- Actions -->
+        <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,16">
+            <TextBlock x:Name="MenuDllStatus" Foreground="{StaticResource TextDimBrush}"
+                       FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12" />
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="LaunchLoadButton" Style="{StaticResource PrimaryButton}"
+                        Content="Launch &amp; Load" Padding="20,12" Click="OnLaunchAndLoad" />
+                <Button x:Name="LoadButton" Content="Load" Padding="20,12" Margin="12,0,0,0"
+                        Click="OnLoad" />
+                <Button x:Name="OpenMenuDirButton" Content="Open Menu Folder..." Padding="14,12"
+                        Margin="12,0,0,0" Click="OnOpenMenuDir" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Status -->
+        <Border Grid.Row="3" Background="{StaticResource PanelBrush}" CornerRadius="6"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="14,10">
+            <TextBlock x:Name="StatusText" Foreground="{StaticResource TextDimBrush}"
+                       FontSize="12.5" Text="Ready." />
+        </Border>
+    </Grid>
+</UserControl>
