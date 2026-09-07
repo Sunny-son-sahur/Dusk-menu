@@ -27,7 +27,7 @@ public static class AccessGate
     public const string ServerGuildId  = "1543035598736986184";
     public const string RequiredRoleId = "1543067837638254592";
     public const string InviteUrl      = "https://discord.gg/Ftfapzsr5m";
-    public const string RoleServiceUrl = "https://YOUR_APP.up.railway.app";
+    public const string RoleServiceUrl = "https://dusk-role-service.hamzafarid2987.workers.dev";
 
     public enum Status
     {
